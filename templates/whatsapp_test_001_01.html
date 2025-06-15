@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Messaging</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #2D2D2D;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-container h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .form-container input, .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            color: #E8E8E8;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #1A1A1A;
+        }
+        .form-container button:hover {
+            background-color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>WhatsApp Messaging</h2>
+        <form action="http://127.0.0.1:5000/send_whatsapp_message" method="POST">
+            <!-- Group Message Selection -->
+            <label for="group_msg">Send to Group:</label>
+            <select id="group_msg" name="group_msg" onchange="toggleFields()" required>
+                <option value="n">No</option>
+                <option value="y">Yes</option>
+            </select>
+
+            <!-- Individual Message Fields -->
+            <div id="individual_fields">
+                <label for="monumb">Mobile Number:</label>
+                <input type="text" id="monumb" name="monumb" placeholder="+919XXXXXXXXX">
+                <label for="msg">Message:</label>
+                <textarea id="msg" name="msg" placeholder="Write your message here..." required></textarea>
+                <label for="time_h">Hour (Optional):</label>
+                <input type="number" id="time_h" name="time_h" min="0" max="23" placeholder="Leave empty for instant message">
+                <label for="time_m">Minute (Optional):</label>
+                <input type="number" id="time_m" name="time_m" min="0" max="59" placeholder="Leave empty for instant message">
+            </div>
+
+            <!-- Group Message Information -->
+            <div id="group_fields" style="display: none;">
+                <label for="group_numbers">Mobile Numbers (separated by commas):</label>
+                <textarea id="group_numbers" name="group_numbers" placeholder="+919XXXXXXXXX, +918XXXXXXXXX" required></textarea>
+                <label for="group_msg_text">Message:</label>
+                <textarea id="group_msg_text" name="group_msg_text" placeholder="Write your message here..." required></textarea>
+            </div>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleFields() {
+            var groupMsg = document.getElementById('group_msg').value;
+            if (groupMsg === 'y') {
+                document.getElementById('individual_fields').style.display = 'none';
+                document.getElementById('group_fields').style.display = 'block';
+            } else {
+                document.getElementById('individual_fields').style.display = 'block';
+                document.getElementById('group_fields').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Post Scheduler</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #2D2D2D;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            width: 400px;
+        }
+        .form-container h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .form-container input, .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            color: #E8E8E8;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #1A1A1A;
+        }
+        .form-container button:hover {
+            background-color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Post to Instagram</h2>
+        <form action="/instagram_post" method="POST">
+            <label for="username">Instagram Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your Instagram username" required>
+
+            <label for="password">Instagram Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your Instagram password" required>
+
+            <label for="media_type">Media Type:</label>
+            <select name="media_type" id="media_type" required>
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+                <option value="carousel">Carousel (multiple images/videos)</option>
+            </select>
+
+            <label for="media_path">Media Path (comma-separated for carousel):</label>
+            <input type="text" id="media_path" name="media_path" placeholder="e.g., /path/to/image.jpg or /path/to/video.mp4" required>
+
+            <label for="caption">Caption:</label>
+            <textarea id="caption" name="caption" placeholder="Enter your caption here..." required></textarea>
+
+            <label for="post_now">Post Now?</label>
+            <select id="post_now" name="post_now">
+                <option value="yes">Yes</option>
+                <option value="no">No, schedule it</option>
+            </select>
+
+            <label for="schedule_time">Schedule Time (if scheduling):</label>
+            <input type="datetime-local" id="schedule_time" name="schedule_time" placeholder="YYYY-MM-DDTHH:MM" disabled>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Disable/Enable schedule_time input based on "Post Now?" selection
+        document.getElementById('post_now').addEventListener('change', function() {
+            if (this.value === 'no') {
+                document.getElementById('schedule_time').disabled = false;
+            } else {
+                document.getElementById('schedule_time').disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
+

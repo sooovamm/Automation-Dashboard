@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Container Status</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #2D2D2D;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-container h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .form-container input, .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            color: #E8E8E8;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #1A1A1A;
+        }
+        .form-container button:hover {
+            background-color: #FFC107;
+        }
+        .result-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #2D2D2D;
+            border-radius: 10px;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Check Docker Container Status</h2>
+    <form id="statusForm">
+        <label for="container_id">Enter Container ID (Optional):</label>
+        <input type="text" id="container_id" name="container_id" placeholder="Leave empty to check all containers">
+        <button type="submit">Check Status</button>
+    </form>
+    <div class="result-container">
+        <h3>Result</h3>
+        <p id="result">The result will appear here.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('statusForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+
+        const formData = new FormData(this); // Collect form data
+
+        try {
+            const response = await fetch('/docker_status_check', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json(); // Parse JSON response
+
+            let resultText = '';
+            if (result.error) {
+                resultText = `Error: ${result.error}`;
+            } else if (result.status) {
+                resultText = `Container ID: ${result.id}, Status: ${result.status}`;
+            } else if (result.containers) {
+                resultText = 'All containers:\n';
+                result.containers.forEach(container => {
+                    resultText += `ID: ${container.id}, Name: ${container.name}, Status: ${container.status}\n`;
+                });
+            } else {
+                resultText = 'No data available';
+            }
+
+            document.getElementById('result').innerText = resultText; // Show result
+
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error.message}`; // Show error
+        }
+    });
+</script>
+
+</body>
+</html>
+

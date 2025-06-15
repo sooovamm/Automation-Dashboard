@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to ASCII Art</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #2D2D2D;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+        }
+        .form-container h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            color: #E8E8E8;
+            font-size: 16px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #1A1A1A;
+        }
+        .form-container button:hover {
+            background-color: #FFC107;
+        }
+        .ascii-art-output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Convert Text to ASCII Art</h2>
+        <form action="/ascii_art_convert" method="POST">
+            <label for="text">Enter Text:</label>
+            <textarea id="text" name="text" rows="4" placeholder="Enter the text you want to convert to ASCII art..."></textarea>
+            <button type="submit">Convert to ASCII</button>
+        </form>
+
+        {% if ascii_art %}
+        <div class="ascii-art-output">
+            <h3>ASCII Art Output:</h3>
+            <pre>{{ ascii_art }}</pre>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
