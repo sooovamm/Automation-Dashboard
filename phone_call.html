@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twilio Call Form</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            color: #E8E8E8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #2D2D2D;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-container h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .form-container input, .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            color: #E8E8E8;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #1A1A1A;
+        }
+        .form-container button:hover {
+            background-color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Make a Call with Twilio</h2>
+        <form action="/make_phone_call" method="POST">
+            <label for="account_sid">Account SID:</label>
+            <input type="text" id="account_sid" name="account_sid" required>
+
+            <label for="auth_token">Auth Token:</label>
+            <input type="password" id="auth_token" name="auth_token" required>
+
+            <label for="twilio_number">Twilio Phone Number:</label>
+            <input type="text" id="twilio_number" name="twilio_number" required>
+
+            <label for="receiver_number">Receiver's Phone Number:</label>
+            <input type="text" id="receiver_number" name="receiver_number" required>
+
+            <label for="message">Message to be Spoken:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <button type="submit">Make Call</button>
+        </form>
+    </div>
+</body>
+</html>
+
